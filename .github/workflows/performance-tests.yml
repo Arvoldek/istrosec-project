@@ -24,6 +24,9 @@ jobs:
           echo "JMETER_HOME=/opt/jmeter" >> $GITHUB_ENV
           echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
 
+      - name: Create JMeter symlink for script compatibility
+        run: sudo ln -sf /opt/jmeter /usr/local/opt/jmeter
+
       - name: Make performance script executable
         run: chmod +x tests/performance/run-performance-tests.sh
 
