@@ -331,10 +331,10 @@ npx playwright test tests/api/auth/postman-echo.spec.js
 
 **Test Plan Configuration:**
 
-- **Load Test:** 10 threads, 2s ramp-up, 10 loops
-- **Stress Test:** 8 threads, 1s ramp-up, 10s duration
-- **Spike Test:** 15 threads, 0s ramp-up, 5 loops
-- **Concurrency Test:** 5 threads, 1s ramp-up, 1 loop
+- **Load Test:** 13 threads, 2s ramp-up, 13 loops
+- **Stress Test:** 11 threads, 1s ramp-up, 13s duration
+- **Spike Test:** 20 threads, 0s ramp-up, 7 loops
+- **Concurrency Test:** 7 threads, 1s ramp-up, 1 loop
 
 **Run performance tests:**
 
