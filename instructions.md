@@ -11,8 +11,7 @@
   interview that tests work.
 - Results/Codes should be published using Github and containing all required
   information to be able to run it locally.
-- Techstack: Use a framework playwright, or cypress, probably pytest.
-- Share your solution with us via GitHub martin.kratmuller@istrosec.com
+- Techstack: Use a framework playwright
 - Test User Data - They can be found directly on the website.
   System under test (SUT)
 - https://www.saucedemo.com/
@@ -30,8 +29,7 @@
   interview that tests work.
 - Results should be published using Github and containing all required information to
   be able to run it locally.
-- Techstack: Use a framework playwright, probably pytest
-- Share your solution with us via GitHub martin.kratmuller@istrosec.com
+- Techstack: Use a framework playwright
   System under test (SUT)
 - https://jsonplaceholder.typicode.com/
 
@@ -103,8 +101,7 @@ following JSON object:
   interview that tests work.
 - Results should be published using Github and containing all required information to
   be able to run it locally.
-- Techstack: Use a framework playwright, probably pytest.
-- Share your solution with us via GitHub martin.kratmuller@istrosec.com
+- Techstack: Use a framework playwright.
 
 # Technical task #4
 
@@ -119,8 +116,7 @@ following JSON object:
   interview that tests work.
 - Results should be published using Github and containing all required information to
   be able to run it locally.
-- Techstack: Use a framework playwright, probably pytest.
-- Share your solution with us via GitHub martin.kratmuller@istrosec.com
+- Techstack: Use a framework playwright.
   System under test (SUT)
 - https://postman-echo.com/
 
@@ -138,6 +134,5 @@ following JSON object:
 - Results should be published using Github and containing all required information to
   be able to run it locally.
 - Techstack: Use a Jmeter
-- Share your solution with us via GitHub martin.kratmuller@istrosec.com
   System under test (SUT)
 - httpbin.org
