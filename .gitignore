@@ -8,7 +8,7 @@ playwright-report/
 reports/
 
 # Test results
- test-results/
+test-results/
 
 # IDE
 .idea/
