@@ -1,7 +1,8 @@
-Technical task #1
-Frontend test automation
+# Technical task #1
 
-## Instructions:
+## Frontend test automation
+
+### Instructions:
 
 - Design and implement some test cases to test the main functionality of the page
   below and automate it.
@@ -16,10 +17,11 @@ Frontend test automation
   System under test (SUT)
 - https://www.saucedemo.com/
 
-Technical task #2
-API test automation – basics
+# Technical task #2
 
-## Instructions:
+## API test automation – basics
+
+### Instructions:
 
 - Design and implement some positive and negative test cases to test the main CRUD
   functionality and automate it.
@@ -33,10 +35,11 @@ API test automation – basics
   System under test (SUT)
 - https://jsonplaceholder.typicode.com/
 
-Technical task #3
-Agent test automation
+# Technical task #3
 
-## Instructions:
+## Agent test automation
+
+### Instructions:
 
 One of the calls that takes place between the agent and the server in the product is the
 periodic agent health check — it contains information about the agent itself and about the
@@ -103,10 +106,11 @@ following JSON object:
 - Techstack: Use a framework playwright, probably pytest.
 - Share your solution with us via GitHub martin.kratmuller@istrosec.com
 
-Technical task #4
-API test automation – auth
+# Technical task #4
 
-## Instructions:
+## API test automation – auth
+
+### Instructions:
 
 - Design and implement some positive and negative test cases to test the
   authorization functionality and automate it.
@@ -120,10 +124,11 @@ API test automation – auth
   System under test (SUT)
 - https://postman-echo.com/
 
-Technical task #5
-Performance tests
+# Technical task #5
 
-## Instructions:
+## Performance tests
+
+### Instructions:
 
 - Design and implement some test cases to test the performance of endpoint and
   automate it.
