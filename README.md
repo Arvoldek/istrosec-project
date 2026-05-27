@@ -4,8 +4,6 @@
 
 This project implements a **comprehensive automated testing framework** covering frontend UI testing, API testing (CRUD operations and authentication), agent health check validation, and performance testing. The project ensures thorough test coverage across multiple Systems Under Test (SUTs).
 
-**Objective:** Deliver 50+ automated test cases across 5 different testing domains with full reporting and documentation.
-
 ---
 
 ## Technology Stack
@@ -126,10 +124,12 @@ The project uses the following configuration files:
 **Description:** Automated execution of Playwright tests on code changes with manual override capability.
 
 **Triggers:**
+
 - Automatically on every push or pull request to the `main` branch
 - Manually via the GitHub Actions tab
 
 **Manual Execution:**
+
 1. Navigate to **Actions** tab in GitHub repository
 2. Select **Playwright Tests** workflow
 3. Click **Run workflow** dropdown
@@ -137,6 +137,7 @@ The project uses the following configuration files:
 5. Click **Run workflow**
 
 **Artifact Access:**
+
 - HTML test report is uploaded as `playwright-report` artifact
 - Download available from the workflow run summary page
 - Artifacts are retained for 3 days
@@ -146,14 +147,17 @@ The project uses the following configuration files:
 **Description:** Manual execution of JMeter performance tests.
 
 **Triggers:**
+
 - Manually via the GitHub Actions tab only
 
 **Manual Execution:**
+
 1. Navigate to **Actions** tab in GitHub repository
 2. Select **Performance Tests** workflow
 3. Click **Run workflow**
 
 **Artifact Access:**
+
 - HTML performance report is uploaded as `performance-report` artifact
 - Download available from the workflow run summary page
 - Artifacts are retained for 3 days
