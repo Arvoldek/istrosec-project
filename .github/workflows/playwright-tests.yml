@@ -39,7 +39,11 @@ jobs:
 
       - name: Run Playwright tests
         run: |
-          case "${{ inputs.test_suite }}" in
+          TEST_SUITE="${{ inputs.test_suite }}"
+          if [ -z "$TEST_SUITE" ]; then
+            TEST_SUITE="all"
+          fi
+          case "$TEST_SUITE" in
             all)
               npx playwright test
               ;;
