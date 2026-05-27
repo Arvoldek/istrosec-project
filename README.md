@@ -505,23 +505,7 @@ module.exports = {
 
 ---
 
-## Best Practices
-
-### Test Writing
-
-1. **Descriptive test names:** Use clear, descriptive names that explain what is being tested
-2. **Single responsibility:** Each test should verify one specific behavior
-3. **Use test data files:** Store test data separately from test logic
-4. **Assert clearly:** Use explicit assertions with descriptive error messages
-5. **Clean up:** Remove any test artifacts after test completion
-
-### Test Execution
-
-1. **Run tests frequently:** Execute tests after each significant change
-2. **Focus on specific tests:** Use file paths to run specific test suites
-3. **Generate reports:** Always generate reports after test execution
-
-### Debugging
+## Debugging
 
 1. **Use Playwright Inspector:**
 
