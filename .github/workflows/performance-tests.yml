@@ -1,0 +1,39 @@
+name: Performance Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Install JMeter
+        run: |
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.tgz
+          tar -xzf apache-jmeter-5.6.tgz
+          sudo mv apache-jmeter-5.6 /opt/jmeter
+          echo "JMETER_HOME=/opt/jmeter" >> $GITHUB_ENV
+          echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Make performance script executable
+        run: chmod +x tests/performance/run-performance-tests.sh
+
+      - name: Run performance tests
+        run: ./tests/performance/run-performance-tests.sh
+
+      - name: Upload performance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-report
+          path: reports/performance/report/
+          retention-days: 3

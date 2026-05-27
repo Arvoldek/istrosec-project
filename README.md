@@ -61,6 +61,11 @@ istrosec-project/
 │
 ├── node_modules/                    # npm dependencies
 │
+├── .github/                         # GitHub Actions workflows
+│   └── workflows/
+│       ├── playwright-tests.yml    # Playwright test automation
+│       └── performance-tests.yml   # Performance test automation
+│
 ├── playwright.config.js             # Playwright configuration
 ├── package.json                     # Node.js project configuration
 ├── package-lock.json                # Dependency lock file
@@ -111,6 +116,47 @@ The project uses the following configuration files:
 - **`configs/test-data.json`** - Contains test credentials, tokens, and test data
 - **`configs/agent-schema.json`** - Defines the expected structure of agent health check data
 - **`playwright.config.js`** - Playwright test runner configuration
+
+---
+
+## GitHub Actions Workflows
+
+### Playwright Tests Workflow
+
+**Description:** Automated execution of Playwright tests on code changes with manual override capability.
+
+**Triggers:**
+- Automatically on every push or pull request to the `main` branch
+- Manually via the GitHub Actions tab
+
+**Manual Execution:**
+1. Navigate to **Actions** tab in GitHub repository
+2. Select **Playwright Tests** workflow
+3. Click **Run workflow** dropdown
+4. Select test suite: `all`, `frontend`, `api/basics`, `api/agent`, or `api/auth` (default: all)
+5. Click **Run workflow**
+
+**Artifact Access:**
+- HTML test report is uploaded as `playwright-report` artifact
+- Download available from the workflow run summary page
+- Artifacts are retained for 3 days
+
+### Performance Tests Workflow
+
+**Description:** Manual execution of JMeter performance tests.
+
+**Triggers:**
+- Manually via the GitHub Actions tab only
+
+**Manual Execution:**
+1. Navigate to **Actions** tab in GitHub repository
+2. Select **Performance Tests** workflow
+3. Click **Run workflow**
+
+**Artifact Access:**
+- HTML performance report is uploaded as `performance-report` artifact
+- Download available from the workflow run summary page
+- Artifacts are retained for 3 days
 
 ---
 
@@ -329,6 +375,16 @@ After running any Playwright tests, reports are generated in HTML and terminal f
 # Run all tests (generates reports automatically)
 npx playwright test
 ```
+
+### Running Tests via GitHub Actions
+
+Both Playwright and Performance tests can be executed through GitHub Actions:
+
+- **Playwright Tests:** Run automatically on push/PR to main, or manually with test suite selection
+- **Performance Tests:** Run manually only
+- **Artifacts:** HTML reports are available for download for 3 days after each run
+
+See [GitHub Actions Workflows](#github-actions-workflows) section above for detailed instructions.
 
 ### Report Locations
 
