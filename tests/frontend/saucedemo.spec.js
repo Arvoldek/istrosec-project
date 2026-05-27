@@ -32,140 +32,129 @@ test.describe('SauceDemo Frontend Tests', () => {
     await expect(page.locator('h3[data-test="error"]')).toHaveText(/Sorry, this user has been locked out/);
   });
 
-  // FE-004: View product catalog
-  test('FE-004: View product catalog after login', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    const products = page.locator('.inventory_item');
-    await expect(products).toHaveCount(6);
-    await expect(products.first()).toBeVisible();
-  });
+  test.describe('Logged in tests', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.fill('#user-name', users.valid.username);
+      await page.fill('#password', users.valid.password);
+      await page.click('#login-button');
+      await expect(page).toHaveURL(env.inventoryUrl);
+    });
 
-  // FE-005: Add product to cart
-  test('FE-005: Add product to cart', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    const firstProduct = page.locator('.inventory_item').first();
-    const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
-    await addToCartButton.click();
-    
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
-  });
+    // FE-004: View product catalog
+    test('FE-004: View product catalog after login', async ({ page }) => {
+      const products = page.locator('.inventory_item');
+      await expect(products).toHaveCount(6);
+      await expect(products.first()).toBeVisible();
+    });
 
-  // FE-006: Remove product from cart
-  test('FE-006: Remove product from cart', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    // Add product to cart first
-    const firstProduct = page.locator('.inventory_item').first();
-    const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
-    await addToCartButton.click();
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
-    
-    // Go to cart and remove
-    await page.click('.shopping_cart_link');
-    await expect(page).toHaveURL(/.*cart\.html/);
-    await expect(page.locator('.cart_item')).toHaveCount(1);
-    
-    const removeButton = page.locator('button:has-text("Remove")').first();
-    await removeButton.click();
-    
-    await expect(page.locator('.cart_item')).toHaveCount(0);
-  });
+    // FE-005: Add product to cart
+    test('FE-005: Add product to cart', async ({ page }) => {
+      const firstProduct = page.locator('.inventory_item').first();
+      const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
+      await addToCartButton.click();
+      
+      await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    });
 
-  // FE-007: Checkout process
-  test('FE-007: Complete checkout process', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    // Add product to cart
-    const firstProduct = page.locator('.inventory_item').first();
-    const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
-    await addToCartButton.click();
-    
-    // Go to cart
-    await page.click('.shopping_cart_link');
-    await page.click('[data-test="checkout"]');
-    
-    // Fill checkout information
-    await page.fill('[data-test="firstName"]', 'Test');
-    await page.fill('[data-test="lastName"]', 'User');
-    await page.fill('[data-test="postalCode"]', '12345');
-    await page.click('[data-test="continue"]');
-    
-    // Verify checkout step 2
-    await expect(page).toHaveURL(/.*checkout-step-two\.html/);
-    await expect(page.locator('.cart_item')).toHaveCount(1);
-    
-    // Finish checkout
-    await page.click('[data-test="finish"]');
-    
-    // Verify completion
-    await expect(page).toHaveURL(/.*checkout-complete\.html/);
-    await expect(page.locator('[data-test="complete-header"]')).toBeVisible();
-  });
+    // FE-006: Remove product from cart
+    test('FE-006: Remove product from cart', async ({ page }) => {
+      await test.step('Add product to cart first', async () => {
+        const firstProduct = page.locator('.inventory_item').first();
+        const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
+        await addToCartButton.click();
+        await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+      });
+      
+      await test.step('Go to cart and remove', async () => {
+        await page.click('.shopping_cart_link');
+        await expect(page).toHaveURL(/.*cart\.html/);
+        await expect(page.locator('.cart_item')).toHaveCount(1);
+        
+        const removeButton = page.locator('button:has-text("Remove")').first();
+        await removeButton.click();
+        
+        await expect(page.locator('.cart_item')).toHaveCount(0);
+      });
+    });
 
-  // FE-008: Sort products by price
-  test('FE-008: Sort products by price (low to high)', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    // Sort by price low to high
-    await page.selectOption('.product_sort_container', 'lohi');
-    
-    // Verify sorting - first product should be the cheapest
-    const prices = await page.locator('.inventory_item_price').allTextContents();
-    const priceValues = prices.map(p => parseFloat(p.replace('$', '')));
-    
-    for (let i = 0; i < priceValues.length - 1; i++) {
-      expect(priceValues[i]).toBeLessThanOrEqual(priceValues[i + 1]);
-    }
-  });
+    // FE-007: Checkout process
+    test('FE-007: Complete checkout process', async ({ page }) => {
+      await test.step('Add product to cart', async () => {
+        const firstProduct = page.locator('.inventory_item').first();
+        const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
+        await addToCartButton.click();
+      });
+      
+      await test.step('Go to cart', async () => {
+        await page.click('.shopping_cart_link');
+        await page.click('[data-test="checkout"]');
+      });
+      
+      await test.step('Fill checkout information', async () => {
+        await page.fill('[data-test="firstName"]', 'Test');
+        await page.fill('[data-test="lastName"]', 'User');
+        await page.fill('[data-test="postalCode"]', '12345');
+        await page.click('[data-test="continue"]');
+      });
+      
+      await test.step('Verify checkout step 2', async () => {
+        await expect(page).toHaveURL(/.*checkout-step-two\.html/);
+        await expect(page.locator('.cart_item')).toHaveCount(1);
+      });
+      
+      await test.step('Finish checkout', async () => {
+        await page.click('[data-test="finish"]');
+      });
+      
+      await test.step('Verify completion', async () => {
+        await expect(page).toHaveURL(/.*checkout-complete\.html/);
+        await expect(page.locator('[data-test="complete-header"]')).toBeVisible();
+      });
+    });
 
-  // FE-009: Filter products by name
-  test('FE-009: Filter products by name', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    // Filter by product name - SauceDemo doesn't have a visible search input, 
-    // but we can test filtering by using the product list and verifying text
-    const products = page.locator('.inventory_item');
-    await expect(products).toHaveCount(6);
-    
-    // Verify we can find products by their names
-    const firstProduct = products.first();
-    await expect(firstProduct).toContainText(/Sauce Labs/);
-  });
+    // FE-008: Sort products by price
+    test('FE-008: Sort products by price (low to high)', async ({ page }) => {
+      await test.step('Sort by price low to high', async () => {
+        await page.selectOption('.product_sort_container', 'lohi');
+      });
+      
+      await test.step('Verify sorting - first product should be the cheapest', async () => {
+        const prices = await page.locator('.inventory_item_price').allTextContents();
+        const priceValues = prices.map(p => parseFloat(p.replace('$', '')));
+        
+        for (let i = 0; i < priceValues.length - 1; i++) {
+          expect(priceValues[i]).toBeLessThanOrEqual(priceValues[i + 1]);
+        }
+      });
+    });
 
-  // FE-010: View product details
-  test('FE-010: View product details', async ({ page }) => {
-    await page.fill('#user-name', users.valid.username);
-    await page.fill('#password', users.valid.password);
-    await page.click('#login-button');
-    await expect(page).toHaveURL(env.inventoryUrl);
-    
-    // Click on first product name link to view details
-    await page.click('a[id*="item_"]');
-    
-    // Verify we're on the product detail page
-    await expect(page).toHaveURL(/.*inventory-item\.html/);
-    await expect(page.locator('.inventory_details_name')).toBeVisible();
-    await expect(page.locator('.inventory_details_desc')).toBeVisible();
-    await expect(page.locator('.inventory_details_price')).toBeVisible();
-    await expect(page.locator('button:has-text("Add to cart")')).toBeVisible();
+    // FE-009: Filter products by name
+    test('FE-009: Filter products by name', async ({ page }) => {
+      await test.step('Filter by product name - SauceDemo does not have a visible search input, but we can test filtering by using the product list and verifying text', async () => {
+        const products = page.locator('.inventory_item');
+        await expect(products).toHaveCount(6);
+      });
+      
+      await test.step('Verify we can find products by their names', async () => {
+        const products = page.locator('.inventory_item');
+        const firstProduct = products.first();
+        await expect(firstProduct).toContainText(/Sauce Labs/);
+      });
+    });
+
+    // FE-010: View product details
+    test('FE-010: View product details', async ({ page }) => {
+      await test.step('Click on first product name link to view details', async () => {
+        await page.click('a[id*="item_"]');
+      });
+      
+      await test.step('Verify we are on the product detail page', async () => {
+        await expect(page).toHaveURL(/.*inventory-item\.html/);
+        await expect(page.locator('.inventory_details_name')).toBeVisible();
+        await expect(page.locator('.inventory_details_desc')).toBeVisible();
+        await expect(page.locator('.inventory_details_price')).toBeVisible();
+        await expect(page.locator('button:has-text("Add to cart")')).toBeVisible();
+      });
+    });
   });
 });
