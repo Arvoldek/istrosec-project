@@ -1,0 +1,22 @@
+{
+  "required": [
+    "agent_id",
+    "computer_name",
+    "os_name",
+    "os_major",
+    "os_minor",
+    "os_build",
+    "last_boot_time",
+    "adapter_info",
+    "session_info",
+    "roles"
+  ],
+  "properties": {
+    "agent_id": { "type": "string", "format": "uuid" },
+    "computer_name": { "type": "string" },
+    "os_name": { "type": "string" },
+    "os_major": { "type": "number" },
+    "os_minor": { "type": "number" },
+    "os_build": { "type": "number" }
+  }
+}

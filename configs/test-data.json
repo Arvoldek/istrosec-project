@@ -1,0 +1,31 @@
+{
+  "saucedemo": {
+    "valid": {
+      "username": "standard_user",
+      "password": "secret_sauce"
+    },
+    "invalid": {
+      "username": "invalid_user",
+      "password": "wrong_password"
+    },
+    "locked": {
+      "username": "locked_out_user",
+      "password": "secret_sauce"
+    },
+    "problem": {
+      "username": "problem_user",
+      "password": "secret_sauce"
+    }
+  },
+  "auth": {
+    "validBearerToken": "valid-token-12345",
+    "invalidBearerToken": "invalid-token-00000",
+    "validApiKey": "PMAK-1234567890abcdefghijklmnopqrstuvwxyz",
+    "invalidApiKey": "INVALID-KEY",
+    "basicAuth": {
+      "valid": { "username": "postman", "password": "password" },
+      "invalid": { "username": "wrong", "password": "wrong" }
+    },
+    "oauthToken": "oauth-token-xyz789"
+  }
+}
